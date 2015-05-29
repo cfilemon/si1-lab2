@@ -1,25 +1,56 @@
 @(title: String)(content: Html)
+
+<!-- <!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        @content
+    </body>
+</html> -->
+
 <!DOCTYPE html>
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta content="IE=edge" http-equiv="X-UA-Compatible">
-	<meta content="initial-scale=1.0, width=device-width" name="viewport">
-	<title>@title</title>
+<!--<![endif]-->
+	<head>
+		<meta charset="utf-8">
+		<title>@title</title>
 
-	<!-- css -->
-	<link href="@routes.Assets.at("css/base.min.css")" rel="stylesheet">
+		<!-- Mobile Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- favicon -->
-	<!-- ... -->
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="@routes.Assets.at("images/favicon.ico")">
 
-	<!-- ie -->
-		<!--[if lt IE 9]>
-			<script src="js/html5shiv.js" type="text/javascript"></script>
-			<script src="js/respond.js" type="text/javascript"></script>
-		<![endif]-->
-</head>
-<body class="avoid-fout">
-	@content
-</body>
+		<!-- Web Fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
+
+		<!-- Bootstrap core CSS -->
+		<link href="@routes.Assets.at("bootstrap/css/bootstrap.css")" rel="stylesheet">
+
+		<!-- Font Awesome CSS -->
+		<link href="@routes.Assets.at("fonts/font-awesome/css/font-awesome.css")" rel="stylesheet">
+
+		<!-- Plugins -->
+		<link href="@routes.Assets.at("css/animations.css")" rel="stylesheet">
+
+		<!-- Worthy core CSS file -->
+		<link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
+
+		<!-- Custom css --> 
+		<link href="@routes.Assets.at("css/custom.css")" rel="stylesheet">
+	</head>
+
+	 <body class="no-trans">
+	 	@content
+	 </body>
 </html>
+
