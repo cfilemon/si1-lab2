@@ -9,7 +9,7 @@ import views.html.index;
 
 public class Application extends Controller {
 
-    private static Form<Anuncio> form = Form.form(Anuncio.class);
+    //private static Form<Anuncio> form = Form.form(Anuncio.class);
 
     public static Result index() {
         return ok(index.render("Aqui tem gente que toca " + Instrumento.Craviola.getNome()));
