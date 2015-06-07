@@ -24,7 +24,7 @@
 							<!-- name-and-slogan -->
 							<div class="site-name-and-slogan smooth-scroll">
 								<div class="site-name"><a href="#banner">2GIG</a></div>
-								<div class="site-slogan">Free Bootstrap Theme by <a target="_blank" href="http://htmlcoder.me">HtmlCoder</a></div>
+								<div class="site-slogan">Procure parceiros para tocar!</div>
 							</div>
 
 						</div>
@@ -75,13 +75,13 @@
 															<div class="row">
 																<div class="col-md-6">
 																	<div class="input-group">
-																		<form name="anunciar" action="/anuncio" method="post">
+																		<form name="anunciar" action="/anuncios" method="post">
 																		<p class="llamaformheader">O que você procura?</p>
-																		<input class="form-control llamainput" name="titulo" type="text" placeholder="Título" />
-																		<textarea rows="4" cols="50" class="form-control llamainput" name="descricao" type="text" placeholder="Descrição"></textarea>
+																		<input class="form-control llamainput" name="titulo" type="text" placeholder="Título" required/>
+																		<textarea rows="4" cols="50" class="form-control llamainput" name="descricao" type="text" placeholder="Descrição" required></textarea>
 																		<p class="llamaformheader">Cadê você?</p>
-																		<input class="form-control llamainput" name="bairro" type="text" placeholder="Seu bairro" />
-																		<input class="form-control llamainput" name="cidade" placeholder="Sua cidade" />
+																		<input class="form-control llamainput" name="bairro" type="text" placeholder="Seu bairro" required/>
+																		<input class="form-control llamainput" name="cidade" placeholder="Sua cidade" required/>
 
 																		<p class="llamaformheader">Contatos</p>
 																		<input class="form-control llamainput" type="text" name="facebook" placeholder="Facebook" />
@@ -92,13 +92,13 @@
 																<div class="col-md-6">
 																	<div class="input-group">
 																		<p class="llamaformheader">Sobre seu som...</p>
-																		<input class="form-control llamainput" type="text" name="instrumentos" placeholder="Instrumentos que você toca" />
+																		<input class="form-control llamainput" type="text" name="instrumentos" placeholder="Instrumentos que você toca" required/>
 																		<input class="form-control llamainput" type="text" name="estilos" placeholder="Estilos de que você gostaria de tocar" />
 																		<input class="form-control llamainput" type="text" name="estilosnao" placeholder="Estilos de que você não gostaria de tocar" />
 
 																	<div class="llamacheckbox-container">
-																		<p><input class="llamacheckbox" type="checkbox" name="banda" placeholder="Banda" /> Você procura uma banda?</p>
-																		<p><input class="llamacheckbox" type="checkbox" name="casual" placeholder="Ocasionalmente" /> ... ou só tocar casualmente?</p>
+																		<p><input class="llamacheckbox" type="radio" name="interesse" value="banda" required/> Você procura uma banda?</p>
+																		<p><input class="llamacheckbox" type="radio" name="interesse" value="casual" required/> ... ou só tocar casualmente?</p>
 																	</div>
 
 																	</div>
@@ -141,8 +141,8 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
-							<h1 class="text-center">We are <span>Worthy</span></h1>
-							<p class="lead text-center">Procure gente pra tocar</p>
+							<h1 class="text-center">Bem-vindo ao <span>2GIG</span></h1>
+							<p class="lead text-center">Anuncie ou procure gente que queira tocar!</p>
 						</div>
 					</div>
 				</div>
@@ -167,9 +167,9 @@
 		<!-- ================ -->
 		<div class="section">
 			<div class="container">
-				<h1 class="text-center title" id="portfolio">Portfolio</h1>
+				<h1 class="text-center title" id="portfolio">Anúncios</h1>
 				<div class="separator"></div>
-				<p class="lead text-center">Lorem ipsum dolor sit amet laudantium molestias similique.<br> Quisquam incidunt ut laboriosam.</p>
+				<p class="lead text-center">Abaixo estão os anúncios cadastrados no nosso site.<br> Você pode filtrá-los por interesse (banda ou casual). Se preferir, faça uma busca. Você també pode criar um anúncio!</p>
 				<br>			
 				<div class="row object-non-visible" data-animation-effect="fadeIn">
 					<div class="col-md-12">
@@ -177,10 +177,9 @@
 						<!-- isotope filters start -->
 						<div class="filters text-center">
 							<ul class="nav nav-pills">
-								<li class="active"><a href="#" data-filter="*">All</a></li>
-								<li><a href="#" data-filter=".web-design">Web design</a></li>
-								<li><a href="#" data-filter=".app-development">App development</a></li>
-								<li><a href="#" data-filter=".site-building">Site building</a></li>
+								<li><a href="#" data-filter=".banda">Formar banda</a></li>
+								<li><a href="#" data-filter=".casual">Tocar casualmente</a></li>
+								<li class="active"><a href="#" data-filter="*">Tanto faz</a></li>
 							</ul>
 						</div>
 						<!-- isotope filters end -->
@@ -188,21 +187,21 @@
 						<!-- portfolio items start -->
 
 						<div class="isotope-container row grid-space-20">
-							@for(anuncio <- anuncios) {
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
+							@for((anuncio, index) <- anuncios.zipWithIndex) {
+							<div class="col-sm-6 col-md-3 isotope-item @anuncio.getInteresse()">
 								<div class="image-box">
 									<div class="overlay-container">
 										@anuncio.getTitulo()
 									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-1">Ver anúncio</a>
+									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#anuncio@index">Ver anúncio</a>
 								</div>
 								<!-- Modal -->
-								<div class="modal fade" id="project-1" tabindex="-1" role="dialog" aria-labelledby="project-1-label" aria-hidden="true">
+								<div class="modal fade" id="anuncio@index" tabindex="-1" role="dialog" aria-labelledby="anuncio-@index-label" aria-hidden="true">
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-1-label">@anuncio.getTitulo()</h4>
+												<h4 class="modal-title" id="anuncio-@index-label">@anuncio.getTitulo()</h4>
 											</div>
 											<div class="modal-body">
 												<h3>@anuncio.getTitulo()</h3>
@@ -224,447 +223,6 @@
 								<!-- Modal end -->
 							</div>
 							}
-
-							<div class="col-sm-6 col-md-3 isotope-item app-development">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-2.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-2">
-											<i class="fa fa-search-plus"></i>
-											<span>App Development</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-2">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-2" tabindex="-1" role="dialog" aria-labelledby="project-2-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-2-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-2.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-3.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-3">
-											<i class="fa fa-search-plus"></i>
-											<span>Web Design</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-3">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-3" tabindex="-1" role="dialog" aria-labelledby="project-3-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-3-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-3.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item site-building">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-4.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-4">
-											<i class="fa fa-search-plus"></i>
-											<span>Site Building</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-4">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-4" tabindex="-1" role="dialog" aria-labelledby="project-4-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-4-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-4.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item app-development">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-5.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-5">
-											<i class="fa fa-search-plus"></i>
-											<span>App Development</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-5">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-5" tabindex="-1" role="dialog" aria-labelledby="project-5-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-5-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-5.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-6.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-6">
-											<i class="fa fa-search-plus"></i>
-											<span>Web Design</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-6">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-6" tabindex="-1" role="dialog" aria-labelledby="project-6-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-6-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-6.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item site-building">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-7.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-7">
-											<i class="fa fa-search-plus"></i>
-											<span>Site Building</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-7">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-7" tabindex="-1" role="dialog" aria-labelledby="project-7-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-7-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-7.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-							
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-8.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-8">
-											<i class="fa fa-search-plus"></i>
-											<span>Web Design</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-8">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-8" tabindex="-1" role="dialog" aria-labelledby="project-8-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-8-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-8.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-9.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-9">
-											<i class="fa fa-search-plus"></i>
-											<span>Web Design</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-9">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-9" tabindex="-1" role="dialog" aria-labelledby="project-9-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-9-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-9.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item site-building">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-10.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-10">
-											<i class="fa fa-search-plus"></i>
-											<span>Site Building</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-10">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-10" tabindex="-1" role="dialog" aria-labelledby="project-10-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-10-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-10.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item web-design">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-11.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-11">
-											<i class="fa fa-search-plus"></i>
-											<span>Web Design</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-11">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-11" tabindex="-1" role="dialog" aria-labelledby="project-11-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-11-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-11.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-
-							<div class="col-sm-6 col-md-3 isotope-item app-development">
-								<div class="image-box">
-									<div class="overlay-container">
-										<img src="@routes.Assets.at("images/portfolio-12.jpg")" alt="">
-										<a class="overlay" data-toggle="modal" data-target="#project-12">
-											<i class="fa fa-search-plus"></i>
-											<span>App Development</span>
-										</a>
-									</div>
-									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#project-12">Project Title</a>
-								</div>
-								<!-- Modal -->
-								<div class="modal fade" id="project-12" tabindex="-1" role="dialog" aria-labelledby="project-12-label" aria-hidden="true">
-									<div class="modal-dialog modal-lg">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="project-12-label">Project Title</h4>
-											</div>
-											<div class="modal-body">
-												<h3>Project Description</h3>
-												<div class="row">
-													<div class="col-md-6">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque sed, quidem quis praesentium, ut unde. Quae sed, incidunt laudantium nesciunt, optio corporis quod earum pariatur omnis illo saepe numquam suscipit, nemo placeat dignissimos eius mollitia et quas officia doloremque ipsum labore rem deserunt vero! Magnam totam delectus accusantium voluptas et, tempora quos atque, fugiat, obcaecati voluptatibus commodi illo voluptates dolore nemo quo soluta quis.</p>
-														<p>Molestiae sed enim laboriosam atque delectus voluptates rerum nostrum sapiente obcaecati molestias quasi optio exercitationem, voluptate quis consequatur libero incidunt, in, quod. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos nobis officiis, autem earum tenetur quidem. Quae non dicta earum. Ipsum autem eaque cum dolor placeat corporis quisquam dolorum at nesciunt.</p>
-													</div>
-													<div class="col-md-6">
-														<img src="@routes.Assets.at("images/portfolio-12.jpg")" alt="">
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- Modal end -->
-							</div>
-
 						</div>
 						<!-- portfolio items end -->
 					
@@ -680,7 +238,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<h1 class="text-center">10000+ Happy Clients!</h1>
+						<h1 class="text-center">Já são 43 gigs formados!</h1>
 					</div>
 				</div>
 			</div>
@@ -697,7 +255,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-md-12">
-							<p class="text-center">Copyright © 2014 Worthy by <a target="_blank" href="http://htmlcoder.me">HtmlCoder</a>.</p>
+							<p class="text-center">2GIG - base template by: <a target="_blank" href="http://htmlcoder.me">HtmlCoder</a>.</p>
 						</div>
 					</div>
 				</div>

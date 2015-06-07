@@ -1,5 +1,6 @@
 package controllers;
 
+import com.google.common.collect.Lists;
 import models.Anuncio;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -8,21 +9,19 @@ import play.mvc.Result;
 import play.data.Form;
 import play.data.DynamicForm;
 import views.html.*;
-
-import java.util.Collections;
 import java.util.List;
 import models.dao.GenericDAO;
 
 public class Application extends Controller {
 
-    private static Form<Anuncio> form = Form.form(Anuncio.class);
     private static GenericDAO db = new GenericDAO();
+    private int finalizados;
 
     /**
      * Página inicial da aplicação.
      * Redireciona para anuncios()
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public static Result index() {
         return anuncios();
     }
@@ -31,7 +30,7 @@ public class Application extends Controller {
      * Renderiza os anúncios que estão salvos no banco de dados.
      * @return OK (200)
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public static Result anuncios() {
         return ok(index.render(getAnuncios()));
     }
@@ -50,25 +49,16 @@ public class Application extends Controller {
             return badRequest(index.render(getAnuncios()));
 
         Anuncio novo = new Anuncio(dados.data());
-
-        if (dados.get("estilos") != null) novo.setEstilosGosta(dados.get("estilos"));
-        if (dados.get("estilosnao") != null) novo.setEstilosNaoGosta(dados.get("estilosnao"));
-
-        Logger.debug("criando novo anuncio: \n titulo: " + novo.getTitulo() + ", descricao: " + novo.getDescricao()
-                + ", instrumentos: " + novo.getInstrumentos() + "estilos: " + novo.getEstilosGosta() + ", desestilos: " + novo.getEstilosNaoGosta());
-
         db.persist(novo);
         db.flush();
 
-        return index();
-        //return created(views.html.index.render(null));
+        return redirect(routes.Application.index());
     }
 
-    @Transactional
-    private static List<Anuncio> getAnuncios() {
+    @Transactional(readOnly = true)
+    public static List<Anuncio> getAnuncios() {
         List<Anuncio> anuncios = db.findAllByClass(Anuncio.class);
-        Collections.sort(anuncios);
-        return anuncios;
+        return Lists.reverse(anuncios);
     }
 
 }

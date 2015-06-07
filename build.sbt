@@ -8,13 +8,15 @@ scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
   javaJdbc,
-  javaEbean,
   cache,
-  javaWs,
-  javaJpa,
-  javaCore,
-  "org.hibernate" % "hibernate-entitymanager" % "3.6.9.Final"
+  javaJpa.exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
+  "org.hibernate" % "hibernate-core" % "4.3.10.Final",
+  "org.hibernate" % "hibernate-entitymanager" % "4.3.10.Final",
+  "org.apache.directory.api" % "api-all" % "1.0.0-M30"
 )
 
 scalacOptions ++= Seq("-encoding", "UTF-8")
+
+
+
 
