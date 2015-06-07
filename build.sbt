@@ -10,5 +10,11 @@ libraryDependencies ++= Seq(
   javaJdbc,
   javaEbean,
   cache,
-  javaWs
+  javaWs,
+  javaJpa,
+  javaCore,
+  "org.hibernate" % "hibernate-entitymanager" % "3.6.9.Final"
 )
+
+scalacOptions ++= Seq("-encoding", "UTF-8")
+
