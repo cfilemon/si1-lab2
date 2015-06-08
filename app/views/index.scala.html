@@ -1,4 +1,4 @@
-@(anuncios: List[Anuncio])
+@(anuncios: List[Anuncio])(message: String)
 
 @main(title = "2GIG - Encontre parceiros e faça um som!") {
 
@@ -77,14 +77,14 @@
 																	<div class="input-group">
 																		<form name="anunciar" action="/anuncios" method="post">
 																		<p class="llamaformheader">O que você procura?</p>
-																		<input class="form-control llamainput" name="titulo" type="text" placeholder="Título" required/>
+																		<input class="form-control llamainput" name="titulo" type="text" placeholder="Título" maxlength="30" required/>
 																		<textarea rows="4" cols="50" class="form-control llamainput" name="descricao" type="text" placeholder="Descrição" required></textarea>
 																		<p class="llamaformheader">Cadê você?</p>
-																		<input class="form-control llamainput" name="bairro" type="text" placeholder="Seu bairro" required/>
-																		<input class="form-control llamainput" name="cidade" placeholder="Sua cidade" required/>
+																		<input class="form-control llamainput" name="bairro" type="text" placeholder="Seu bairro" maxlength="30" required/>
+																		<input class="form-control llamainput" name="cidade" placeholder="Sua cidade" maxlength="30" required/>
 
 																		<p class="llamaformheader">Contatos</p>
-																		<input class="form-control llamainput" type="text" name="facebook" placeholder="Facebook" />
+																		<input class="form-control llamainput" type="url" name="facebook" placeholder="Facebook" />
 																		<input class="form-control llamainput" type="email" name="e-mail" placeholder="E-mail" />
 
 																	</div>
@@ -142,7 +142,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
 							<h1 class="text-center">Bem-vindo ao <span>2GIG</span></h1>
-							<p class="lead text-center">Anuncie ou procure gente que queira tocar!</p>
+							<p class="lead text-center">@message</p>
 						</div>
 					</div>
 				</div>
@@ -201,16 +201,21 @@
 										<div class="modal-content">
 											<div class="modal-header">
 												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-												<h4 class="modal-title" id="anuncio-@index-label">@anuncio.getTitulo()</h4>
+												<h4 class="modal-title" id="anuncio-@index-label">@anuncio.getTitulo() | interesse: @anuncio.getInteresse() | <i>criado em @anuncio.getData_criacao_formatada()</i></h4>
 											</div>
 											<div class="modal-body">
-												<h3>@anuncio.getTitulo()</h3>
 												<div class="row">
 													<div class="col-md-6">
-														<p>@anuncio.getDescricao()</p>
+														<p><b>Descrição:</b> @anuncio.getDescricao()</p>
+														<p><b>Local:</b> @anuncio.getBairro(), @anuncio.getCidade()</p>
+														<p><b>Instrumentos que toco:</b> @anuncio.getInstrumentos()</p>
+														<p><b>Estilos de que gosto:</b> @anuncio.getEstilosGosta()</p>
+														<p><b>Estilos de que não gosto:</b> @anuncio.getEstilosNaoGosta()</p>
 													</div>
 													<div class="col-md-6">
-
+														<h4>Entre em contato!</h4>
+														<p>Facebook: <a href="@anuncio.getFacebook()">@anuncio.getFacebook</a></p>
+														<p>E-mail: <a href="mailto:@anuncio.getEmail_contato()">@anuncio.getEmail_contato()</a></p>
 													</div>
 												</div>
 											</div>

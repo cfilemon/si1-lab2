@@ -1,6 +1,7 @@
 package models;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -35,17 +36,6 @@ public class Anuncio implements Comparable<Anuncio>{
     protected final String PARAMETROS_OBRIGATORIOS = "titulo,descricao,bairro,cidade,instrumentos,interesse";
 
     public Anuncio() {
-        this.data_criacao = new Date();
-    }
-
-    public Anuncio(String titulo, String descricao, String bairro, String cidade, String instrumentos, String interesse) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.instrumentos = instrumentos;
-        this.interesse = interesse;
-        this.data_criacao = new Date();
     }
 
     public Anuncio(Map<String, String> args) throws Exception {
@@ -130,6 +120,13 @@ public class Anuncio implements Comparable<Anuncio>{
 
     public Date getData_criacao() {
         return data_criacao;
+    }
+
+    /**
+     * @return A data de criação em formato textual dd-MM-yyyy
+     */
+    public String getData_criacao_formatada() {
+        return new SimpleDateFormat("dd-MM-yyyy").format(this.getData_criacao());
     }
 
     /**
