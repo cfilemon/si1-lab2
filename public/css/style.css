@@ -720,6 +720,19 @@ textarea {
 /* llama's sandbox */
 /* hi there */
 
+.llama-overlay-container h6 {
+	font-size:1.2em;
+	margin-bottom: 0;
+}
+
+.llama-overlay-container {
+	text-align: center;
+}
+
+.llama-search {
+	margin: auto;
+}
+
 .llamainput {
 	margin: 5px 5px;
 }

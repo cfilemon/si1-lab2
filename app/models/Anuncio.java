@@ -1,5 +1,7 @@
 package models;
 
+import play.Logger;
+
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,6 +36,7 @@ public class Anuncio implements Comparable<Anuncio>{
     private Date data_criacao;
 
     protected final String PARAMETROS_OBRIGATORIOS = "titulo,descricao,bairro,cidade,instrumentos,interesse";
+    private String keywords = "in john bonham we trust";
 
     public Anuncio() {
     }
@@ -55,8 +58,15 @@ public class Anuncio implements Comparable<Anuncio>{
             this.setEstilosGosta(args.get("estilos"));
         if (args.get("desestilos") != null)
             this.setEstilosNaoGosta(args.get("desestilos"));
+
+        setKeywords();
     }
 
+    /**
+     * Valida os parâmetros recebidos do formulário de criação de um novo anúncio.
+     * Os campos descritos sem PARAMETROS_OBRIGATORIOS devem ser não-nulos
+     * A validação de contato é feita à parte (ver setContato())
+     */
     private void validaParametros(Map<String, String> args) throws Exception {
         if (args == null || args.isEmpty() || args.keySet().isEmpty() || args.values().isEmpty())
             throw new Exception("Whops. Cosntrutor com parametros nulos...");
@@ -68,11 +78,35 @@ public class Anuncio implements Comparable<Anuncio>{
 
     }
 
+    /**
+     * Valida e define os contatos de cada anúncio.
+     * É necessário que haja, ao menos, uma forma de contato de duas possíveis (facebook e e-mail)
+     * @param args
+     * @throws Exception caso não haja contato definido no anúncio
+     */
     private void setContatos(Map<String, String> args) throws Exception {
         if ((args.get("facebook") == null) && (args.get("e-mail") == null))
             throw new Exception("Eh preciso ter ao menos uma forma de contato!");
         this.facebook = args.get("facebook");
         this.email_contato = args.get("e-mail");
+    }
+
+    /**
+     * Cria a nuvem de keywords do Anúncio - onde serão feitas as buscas por palavra-chave
+     */
+    private void setKeywords() {
+        String k = "";
+        k += getTitulo() + ",";
+        k += getDescricao() + ",";
+        k += getBairro() + ",";
+        k += getCidade() + ",";
+        k += getInstrumentos() + ",";
+        if (getEstilosGosta() != null)
+            k += getEstilosGosta() + ",";
+        if (getEstilosNaoGosta() != null)
+            k += getEstilosNaoGosta();
+
+        this.keywords = k;
     }
 
     /**
@@ -120,6 +154,10 @@ public class Anuncio implements Comparable<Anuncio>{
 
     public Date getData_criacao() {
         return data_criacao;
+    }
+
+    public String getKeywords() {
+        return this.keywords;
     }
 
     /**

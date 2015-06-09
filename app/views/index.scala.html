@@ -1,4 +1,4 @@
-@(anuncios: List[Anuncio])(message: String)
+@(anuncios: List[Anuncio])
 
 @main(title = "2GIG - Encontre parceiros e faça um som!") {
 
@@ -59,7 +59,7 @@
 										<!-- Collect the nav links, forms, and other content for toggling -->
 										<div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
 											<ul class="nav navbar-nav navbar-right">
-												<li class="active"><a href="#banner">Início</a></li>
+												<li class="active"><a href="/">Início</a></li>
 												<li><a href="#portfolio">Anúncios</a></li>
 												<li><a href="#" data-toggle="modal" data-target="#criar-anuncio">Anuncie!</a></li>
 
@@ -142,7 +142,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
 							<h1 class="text-center">Bem-vindo ao <span>2GIG</span></h1>
-							<p class="lead text-center">@message</p>
+							<p class="lead text-center">Procure parceiros para tocar junto!</p>
 						</div>
 					</div>
 				</div>
@@ -169,7 +169,9 @@
 			<div class="container">
 				<h1 class="text-center title" id="portfolio">Anúncios</h1>
 				<div class="separator"></div>
-				<p class="lead text-center">Abaixo estão os anúncios cadastrados no nosso site.<br> Você pode filtrá-los por interesse (banda ou casual). Se preferir, faça uma busca. Você també pode criar um anúncio!</p>
+				<p class="lead text-center">Clique num anúncio para obter mais informações. Você também pode usar palavras-chave para fitrá-los.
+					<br>
+					Você também pode criar seu próprio anúncio <a href="#" data-toggle="modal" data-target="#criar-anuncio">clicando aqui</a></p>
 				<br>			
 				<div class="row object-non-visible" data-animation-effect="fadeIn">
 					<div class="col-md-12">
@@ -177,21 +179,31 @@
 						<!-- isotope filters start -->
 						<div class="filters text-center">
 							<ul class="nav nav-pills">
-								<li><a href="#" data-filter=".banda">Formar banda</a></li>
-								<li><a href="#" data-filter=".casual">Tocar casualmente</a></li>
+								<li><a href="#" data-filter=".banda">Quero formar uma banda</a></li>
+								<li><a href="#" data-filter=".casual">Quero tocar casualmente</a></li>
 								<li class="active"><a href="#" data-filter="*">Tanto faz</a></li>
 							</ul>
+						</div>
+						<div class="llama-search text-center">
+							<form action="/busca" method="get">
+								<input class="form-controll llama-input" type="text" name="q" pattern=".{3,}" placeholder="Digite uma ou mais palavras-chave (ex.: John Bonham)" required>
+								<input type="submit" value="enviar">
+							</form>
 						</div>
 						<!-- isotope filters end -->
 
 						<!-- portfolio items start -->
 
-						<div class="isotope-container row grid-space-20">
+						<div class="isotope-container row grid-space-20" id="anuncios-container">
 							@for((anuncio, index) <- anuncios.zipWithIndex) {
 							<div class="col-sm-6 col-md-3 isotope-item @anuncio.getInteresse()">
 								<div class="image-box">
-									<div class="overlay-container">
-										@anuncio.getTitulo()
+									<div class="llama-overlay-container">
+										<h6>@anuncio.getTitulo()</h6>
+										<br>
+										em @anuncio.getBairro(), @anuncio.getCidade()
+										<br>
+										criado em @anuncio.getData_criacao_formatada()
 									</div>
 									<a class="btn btn-default btn-block" data-toggle="modal" data-target="#anuncio@index">Ver anúncio</a>
 								</div>
@@ -200,7 +212,7 @@
 									<div class="modal-dialog modal-lg">
 										<div class="modal-content">
 											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+												<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
 												<h4 class="modal-title" id="anuncio-@index-label">@anuncio.getTitulo() | interesse: @anuncio.getInteresse() | <i>criado em @anuncio.getData_criacao_formatada()</i></h4>
 											</div>
 											<div class="modal-body">
@@ -209,13 +221,22 @@
 														<p><b>Descrição:</b> @anuncio.getDescricao()</p>
 														<p><b>Local:</b> @anuncio.getBairro(), @anuncio.getCidade()</p>
 														<p><b>Instrumentos que toco:</b> @anuncio.getInstrumentos()</p>
-														<p><b>Estilos de que gosto:</b> @anuncio.getEstilosGosta()</p>
-														<p><b>Estilos de que não gosto:</b> @anuncio.getEstilosNaoGosta()</p>
+														@if(anuncio.getEstilosGosta() != null && anuncio.getEstilosGosta().trim() != "") {
+															<p><b>Estilos de que gosto:</b> @anuncio.getEstilosGosta()</p>
+														}
+														@if(anuncio.getEstilosNaoGosta() != null && anuncio.getEstilosNaoGosta().trim() != "") {
+															<p><b>
+																Estilos de que não gosto:</b> @anuncio.getEstilosNaoGosta()</p>
+														}
 													</div>
 													<div class="col-md-6">
 														<h4>Entre em contato!</h4>
-														<p>Facebook: <a href="@anuncio.getFacebook()">@anuncio.getFacebook</a></p>
-														<p>E-mail: <a href="mailto:@anuncio.getEmail_contato()">@anuncio.getEmail_contato()</a></p>
+														@if(anuncio.getFacebook() != null) {
+															<p>Facebook: <a href="@anuncio.getFacebook()">@anuncio.getFacebook</a></p>
+														}
+														@if(anuncio.getEmail_contato() != null) {
+															<p>E-mail: <a href="mailto:@anuncio.getEmail_contato()">@anuncio.getEmail_contato()</a></p>
+														}
 													</div>
 												</div>
 											</div>
