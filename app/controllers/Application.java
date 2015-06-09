@@ -17,10 +17,16 @@ import models.dao.GenericDAO;
 
 public class Application extends Controller {
 
-    // pagina inicial da aplicacao
+    // pagina inicial da aplicacao:
     private static final Result INICIO = redirect(routes.Application.anuncios());
 
+    // mensagem padrão na index:
+    private static final String HOME_OLAR = "Encontre pessoas para fazer um som!";
+
+    // banco de dados:
     private static GenericDAO db = new GenericDAO();
+
+    // número de gigs realizados com a ajuda da aplicação:
     private static int sucessos;
 
     /**
@@ -38,7 +44,16 @@ public class Application extends Controller {
      */
     @Transactional(readOnly = true)
     public static Result anuncios() {
-        return ok(index.render(getAnuncios(), sucessos));
+        return ok(index.render(getAnuncios(), sucessos, getMessageIndex()));
+    }
+
+    /**
+     * Verifica se há flash scoping para exibir mensagens de sucesso e erro na index.
+     * Caso não haja, a mensagem padrão será exibida.
+     * @return
+     */
+    private static String getMessageIndex() {
+        return flash("success") == null ?  HOME_OLAR : flash("success");
     }
 
     /**
@@ -48,7 +63,7 @@ public class Application extends Controller {
      */
     @Transactional(readOnly = true)
     public static Result busca(String query) {
-        return ok(index.render(getAnuncios(query), sucessos));
+        return ok(index.render(getAnuncios(query), sucessos, "olar"));
     }
 
     /**
@@ -62,15 +77,24 @@ public class Application extends Controller {
         DynamicForm dados = Form.form().bindFromRequest();
 
         if (dados.hasErrors())
-            return badRequest(index.render(getAnuncios(), sucessos));
+            return badRequest(index.render(getAnuncios(), sucessos, "olar"));
 
         Anuncio novo = new Anuncio(dados.data());
         db.persist(novo);
         db.flush();
 
+        flash("success", "O anúncio foi criado com sucesso!");
         return INICIO;
     }
 
+    /**
+     * Encerra um anúncio e o apaga do BD.
+     * É necessário fornecer a palavra-passe do anúncio para realizar a operação.
+     * Se o anúncio encerrado tiver sido útil, incrementa a variável que conta o número de
+     * gigs realizados com a ajuda da aplicação
+     * @param id
+     * @return
+     */
     @Transactional
     public static Result encerraAnuncio(Long id) {
         DynamicForm dados = Form.form().bindFromRequest();
@@ -90,6 +114,7 @@ public class Application extends Controller {
         if (dados.get("gig-sucesso") != null && dados.get("gig-sucesso").trim() != "")
             if (dados.get("gig-sucesso").equals("sim")) incrementaSucessos();
 
+        flash("success", "O anúncio foi encerrado com sucesso!");
         return INICIO;
     }
     /**
@@ -114,6 +139,7 @@ public class Application extends Controller {
         if (anuncios.size() <= 0)
             return getAnuncios();
 
+        @SuppressWarnings("unchecked")
         Set<Anuncio> resultado = new ListOrderedSet();
         for (Anuncio anuncio : anuncios) {
             for (String subquery : query.split(",")) {
@@ -130,6 +156,9 @@ public class Application extends Controller {
         return anuncios;
     }
 
+    /**
+     * Incrementa a quantidade de gigs realizados com a ajuda da aplicação
+     */
     private static void incrementaSucessos() {
         sucessos++;
     }

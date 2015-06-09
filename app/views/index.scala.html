@@ -1,4 +1,4 @@
-@(anuncios: List[Anuncio], sucessos: Integer)
+@(anuncios: List[Anuncio], sucessos: Integer, msg: String)
 
 @main(title = "2GIG - Encontre parceiros e faça um som!") {
 
@@ -144,7 +144,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 object-non-visible" data-animation-effect="fadeIn">
 							<h1 class="text-center">Bem-vindo ao <span>2GIG</span></h1>
-							<p class="lead text-center">Procure parceiros para tocar junto!</p>
+							<p class="lead text-center">@msg</p>
 						</div>
 					</div>
 				</div>
