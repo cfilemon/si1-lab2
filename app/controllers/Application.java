@@ -38,7 +38,7 @@ public class Application extends Controller {
      */
     @Transactional(readOnly = true)
     public static Result anuncios() {
-        return ok(index.render(getAnuncios()));
+        return ok(index.render(getAnuncios(), sucessos));
     }
 
     /**
@@ -48,7 +48,7 @@ public class Application extends Controller {
      */
     @Transactional(readOnly = true)
     public static Result busca(String query) {
-        return ok(index.render(getAnuncios(query)));
+        return ok(index.render(getAnuncios(query), sucessos));
     }
 
     /**
@@ -62,7 +62,7 @@ public class Application extends Controller {
         DynamicForm dados = Form.form().bindFromRequest();
 
         if (dados.hasErrors())
-            return badRequest(index.render(getAnuncios()));
+            return badRequest(index.render(getAnuncios(), sucessos));
 
         Anuncio novo = new Anuncio(dados.data());
         db.persist(novo);

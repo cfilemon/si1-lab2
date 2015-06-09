@@ -1,4 +1,4 @@
-@(anuncios: List[Anuncio])
+@(anuncios: List[Anuncio], sucessos: Integer)
 
 @main(title = "2GIG - Encontre parceiros e faça um som!") {
 
@@ -290,18 +290,23 @@
 		</div>
 		<!-- section end -->
 
-		<!-- section start -->
+		<!-- contador -->
 		<!-- ================ -->
+		@if(sucessos-1 > 1) {
 		<div class="default-bg space">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-						<h1 class="text-center">Já são 43 gigs formados!</h1>
+
+							<h1 class="text-center">Mais de @{
+								sucessos - 1
+							} gigs feitos através do 2GIG!</h1>
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- section end -->
+		}
+		<!-- contador end -->
 
 		<!-- footer start -->
 		<!-- ================ -->
