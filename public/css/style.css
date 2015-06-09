@@ -745,3 +745,10 @@ textarea {
 .llamacheckbox-container {
 	margin: 10px 10px;
 }
+
+.llama-encerrator {
+	font-size: 0.7em;
+	heigth: 100%;
+	float:left;
+	margin-top: auto;
+}

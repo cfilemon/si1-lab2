@@ -32,10 +32,13 @@ public class Anuncio implements Comparable<Anuncio>{
     private String estilosNaoGosta;
     @Column
     private String interesse;
+    @Column
+    private String passw;
     @Temporal(TemporalType.DATE)
     private Date data_criacao;
 
-    protected final String PARAMETROS_OBRIGATORIOS = "titulo,descricao,bairro,cidade,instrumentos,interesse";
+
+    protected final String PARAMETROS_OBRIGATORIOS = "titulo,descricao,bairro,cidade,instrumentos,interesse,passw";
     private String keywords = "in john bonham we trust";
 
     public Anuncio() {
@@ -52,6 +55,7 @@ public class Anuncio implements Comparable<Anuncio>{
         this.cidade = args.get("cidade");
         this.instrumentos = args.get("instrumentos");
         this.interesse = args.get("interesse");
+        this.passw = args.get("passw");
         this.data_criacao = new Date();
 
         if (args.get("estilos") != null)
@@ -108,6 +112,12 @@ public class Anuncio implements Comparable<Anuncio>{
 
         this.keywords = k;
     }
+
+    public boolean isPasswCorreto(String tentativa) {
+        return tentativa == null ? false : this.passw.equals(tentativa);
+    }
+
+    public String getpassw() { return passw; }
 
     /**
      * Getters

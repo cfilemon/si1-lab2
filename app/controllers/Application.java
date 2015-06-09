@@ -21,7 +21,7 @@ public class Application extends Controller {
     private static final Result INICIO = redirect(routes.Application.anuncios());
 
     private static GenericDAO db = new GenericDAO();
-    private static int finalizados;
+    private static int sucessos;
 
     /**
      * Página inicial da aplicação.
@@ -40,7 +40,6 @@ public class Application extends Controller {
     public static Result anuncios() {
         return ok(index.render(getAnuncios()));
     }
-
 
     /**
      * Renderiza os anúncios que atendem aos critérios da busca especificados em query
@@ -72,6 +71,27 @@ public class Application extends Controller {
         return INICIO;
     }
 
+    @Transactional
+    public static Result encerraAnuncio(Long id) {
+        DynamicForm dados = Form.form().bindFromRequest();
+
+        if (dados.hasErrors())
+            return badRequest("Whops. Algo deu errado. Tente novamente!");
+
+        if (dados.get("passw") != null && dados.get("passw").trim() != ""){
+            Anuncio a = db.findByEntityId(Anuncio.class, id);
+            String p = dados.get("passw");
+            if (a.isPasswCorreto(p)) {
+                db.removeById(Anuncio.class, id);
+                db.flush();
+            }
+        }
+
+        if (dados.get("gig-sucesso") != null && dados.get("gig-sucesso").trim() != "")
+            if (dados.get("gig-sucesso").equals("sim")) incrementaSucessos();
+
+        return INICIO;
+    }
     /**
      * Retorna uma List de todos os Anuncios armazenados no BD
      */
@@ -108,6 +128,10 @@ public class Application extends Controller {
         if (!anuncios.addAll(resultado)) return getAnuncios();
 
         return anuncios;
+    }
+
+    private static void incrementaSucessos() {
+        sucessos++;
     }
 
 }

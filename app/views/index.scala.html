@@ -100,14 +100,16 @@
 																		<p><input class="llamacheckbox" type="radio" name="interesse" value="banda" required/> Você procura uma banda?</p>
 																		<p><input class="llamacheckbox" type="radio" name="interesse" value="casual" required/> ... ou só tocar casualmente?</p>
 																	</div>
-
+																		<p class="llamaformheader">Palavra-passe</p>
+																		<p><i>Defina uma palavra-passe para o seu anúncio. Você só pode encerrar um anúncio se fornecer a palavra-passe correta!
+																		</i></p>
+																		<p><input class="form-controll llamainput" type="text" name="passw" placeholder="P4l4vr4-p4$$e" required></p>
 																	</div>
 																</div>
 															</div>
 														</div>
 														<div class="modal-footer">
 															<input type="submit" class="btn btn-sm btn-default" value="Publicar anúncio" />
-
 														</div>
 														</form>
 													</div>
@@ -241,10 +243,40 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
+												<a class="btn btn-default llama-encerrator" data-toggle="modal" data-target="#encerrar-anuncio@index">kill it!</a> <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
 											</div>
 										</div>
 									</div>
+
+									<!-- encerrar anúncio inicio -->
+									<div class="modal fade" id="encerrar-anuncio@index" tabindex="-1" role="dialog" aria-labelledby="encerrar-anuncio-@index-label" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+													<h4 class="modal-title" id="encerrar-anuncio-@index-label">Encerrar <i>@anuncio.getTitulo()</i></h4>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+														<div class="col-md-6">
+														<form id="encerrar-anuncio" action="/anuncios/@anuncio.getId()" method="post">
+															<p>Digite a palavra passe:</p>
+															<input class="form-controll llama-input" type="text" placeholder="Digite a palavra-passe" name="passw" required />
+															<div class="llamacheckbox-container">
+																<p><input class="llamacheckbox" type="radio" name="gig-sucesso" value="sim" required/> Sim :) </p>
+																<p><input class="llamacheckbox" type="radio" name="gig-sucesso" value="nao" required/> Não :( </p>
+															</div>
+														</form>
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="submit" form="encerrar-anuncio" class="btn btn-sm btn-default">Finalizar Anúncio!</button> <button class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- encerrar anuncio fim -->
 								</div>
 								<!-- Modal end -->
 							</div>

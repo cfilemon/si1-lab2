@@ -6,6 +6,7 @@
 GET         /                    controllers.Application.index()
 GET         /anuncios            controllers.Application.anuncios()
 POST        /anuncios            controllers.Application.novoAnuncio()
+POST        /anuncios/:id        controllers.Application.encerraAnuncio(id: Long)
 GET         /busca               controllers.Application.busca(q: String?="")
 
 # Map static resources from the /public folder to the /assets URL path
