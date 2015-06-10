@@ -66,6 +66,18 @@ public class Anuncio implements Comparable<Anuncio>{
         setKeywords();
     }
 
+    /* Construtor usado pelo Global.java */
+    public Anuncio(String titulo, String descricao, String bairro, String cidade, String instrumentos, String passw, String email, String facebook) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.instrumentos = instrumentos;
+        this.passw = passw;
+        this.email_contato = email;
+        this.facebook = facebook;
+    }
+
     /**
      * Valida os parâmetros recebidos do formulário de criação de um novo anúncio.
      * Os campos descritos sem PARAMETROS_OBRIGATORIOS devem ser não-nulos
@@ -180,11 +192,11 @@ public class Anuncio implements Comparable<Anuncio>{
     /**
      * Setters
      */
-    private void setTitulo(String novo) {
+    public void setTitulo(String novo) {
         this.titulo = titulo;
     }
 
-    private void setDescricao(String novo) {
+    public void setDescricao(String novo) {
         this.descricao = descricao;
     }
 
@@ -232,6 +244,10 @@ public class Anuncio implements Comparable<Anuncio>{
         this.data_criacao = data_criacao;
     }
 
+    public void setPassw(String passw) {
+        this.passw = passw;
+    }
+
     /**
      * Torna a classe Anuncio comparavel por data_criacao
      * @param o
@@ -241,4 +257,6 @@ public class Anuncio implements Comparable<Anuncio>{
     public int compareTo(Anuncio o) {
         return o.getData_criacao().compareTo(this.getData_criacao());
     }
+
+
 }

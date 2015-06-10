@@ -163,13 +163,4 @@ public class Application extends Controller {
         sucessos++;
     }
 
-    private static void doTheMagic(String adminpass) {
-        if (adminpass.equals("john-b0nham")) {
-            for (int i = 0; i < 50; i ++) {
-                Map<String, String> r = new Map<String, String>();
-            }
-        }
-
-    }
-
 }

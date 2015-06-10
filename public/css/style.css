@@ -755,3 +755,9 @@ textarea {
 .llama-row {
 	width:20%;
 }
+
+.main-searchbar input {
+	width: 600px;
+	height: 80px;
+	text-align:center;
+}
