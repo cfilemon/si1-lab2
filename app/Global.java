@@ -31,6 +31,7 @@ public class Global extends GlobalSettings{
                 Anuncio anuncio = new Anuncio(titulo, descricao, bairro, cidade, instr, passw, email, fb);
 
                 anuncio.setData_criacao(new Date());
+                anuncio.setKeywords();
 
                 if (i % 2 == 0)
                     anuncio.setInteresse("banda");

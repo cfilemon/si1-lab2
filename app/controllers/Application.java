@@ -27,7 +27,7 @@ public class Application extends Controller {
     private static GenericDAO db = new GenericDAO();
 
     // número de gigs realizados com a ajuda da aplicação:
-    private static int sucessos;
+    private static int sucessos = 3;
 
     /**
      * Página inicial da aplicação.

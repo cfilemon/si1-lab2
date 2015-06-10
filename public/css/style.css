@@ -756,8 +756,12 @@ textarea {
 	width:20%;
 }
 
-.main-searchbar input {
+.main-searchbar {
 	width: 600px;
-	height: 80px;
+	height: 42px;
 	text-align:center;
 }
+
+@media (max-width:480px) {
+	.main-searchbar {width:400px;}
+	}

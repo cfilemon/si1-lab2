@@ -63,7 +63,7 @@ public class Anuncio implements Comparable<Anuncio>{
         if (args.get("desestilos") != null)
             this.setEstilosNaoGosta(args.get("desestilos"));
 
-        setKeywords();
+        setKeywordsPriv();
     }
 
     /* Construtor usado pelo Global.java */
@@ -110,7 +110,11 @@ public class Anuncio implements Comparable<Anuncio>{
     /**
      * Cria a nuvem de keywords do Anúncio - onde serão feitas as buscas por palavra-chave
      */
-    private void setKeywords() {
+    private void setKeywordsPriv() {
+        setKeywords();
+    }
+
+    public void setKeywords() {
         String k = "";
         k += getTitulo() + ",";
         k += getDescricao() + ",";
