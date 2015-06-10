@@ -735,6 +735,8 @@ textarea {
 
 .llamainput {
 	margin: 5px 5px;
+	width: 400px;
+	heigth: 50px;
 }
 
 .llamaformheader {
@@ -747,8 +749,9 @@ textarea {
 }
 
 .llama-encerrator {
-	font-size: 0.7em;
-	heigth: 100%;
 	float:left;
-	margin-top: auto;
+}
+
+.llama-row {
+	width:20%;
 }

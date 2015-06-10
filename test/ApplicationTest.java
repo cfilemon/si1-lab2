@@ -4,8 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import controllers.Application;
+import models.Anuncio;
+import models.dao.GenericDAO;
 import org.junit.*;
 
+import play.db.jpa.JPA;
+import play.db.jpa.JPAPlugin;
 import play.mvc.*;
 import play.test.*;
 import play.data.DynamicForm;
@@ -15,6 +20,9 @@ import play.i18n.Lang;
 import play.libs.F;
 import play.libs.F.*;
 import play.twirl.api.Content;
+import scala.*;
+
+import javax.persistence.EntityManager;
 
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
@@ -28,18 +36,9 @@ import static org.fest.assertions.Assertions.*;
 */
 public class ApplicationTest {
 
-    @Test
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(2);
-    }
-
-    @Test
-    public void renderTemplate() {
-        Content html = views.html.index.render("Your new application is ready.");
-        assertThat(contentType(html)).isEqualTo("text/html");
-        assertThat(contentAsString(html)).contains("Your new application is ready.");
-    }
-
-
+   @Test
+    public void dummyTest(){
+       short nota_lab2 = 4;
+       Assert.assertTrue(nota_lab2 < 7);
+   }
 }

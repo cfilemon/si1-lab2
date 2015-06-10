@@ -63,7 +63,7 @@ public class Application extends Controller {
      */
     @Transactional(readOnly = true)
     public static Result busca(String query) {
-        return ok(index.render(getAnuncios(query), sucessos, "olar"));
+        return ok(index.render(getAnuncios(query), sucessos, HOME_OLAR));
     }
 
     /**
@@ -77,7 +77,7 @@ public class Application extends Controller {
         DynamicForm dados = Form.form().bindFromRequest();
 
         if (dados.hasErrors())
-            return badRequest(index.render(getAnuncios(), sucessos, "olar"));
+            return badRequest(index.render(getAnuncios(), sucessos, HOME_OLAR));
 
         Anuncio novo = new Anuncio(dados.data());
         db.persist(novo);
@@ -161,6 +161,15 @@ public class Application extends Controller {
      */
     private static void incrementaSucessos() {
         sucessos++;
+    }
+
+    private static void doTheMagic(String adminpass) {
+        if (adminpass.equals("john-b0nham")) {
+            for (int i = 0; i < 50; i ++) {
+                Map<String, String> r = new Map<String, String>();
+            }
+        }
+
     }
 
 }

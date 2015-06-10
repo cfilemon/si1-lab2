@@ -243,7 +243,7 @@
 												</div>
 											</div>
 											<div class="modal-footer">
-												<a class="btn btn-default llama-encerrator" data-toggle="modal" data-target="#encerrar-anuncio@index">kill it!</a> <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
+												<a class="btn btn-default llama-encerrator" data-toggle="modal" data-target="#encerrar-anuncio@index">encerrar anuncio</a> <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
 											</div>
 										</div>
 									</div>
@@ -256,19 +256,15 @@
 													<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
 													<h4 class="modal-title" id="encerrar-anuncio-@index-label">Encerrar <i>@anuncio.getTitulo()</i></h4>
 												</div>
-												<div class="modal-body">
-													<div class="row">
-														<div class="col-md-6">
+												<div class="modal-body text-center">
 														<form id="encerrar-anuncio" action="/anuncios/@anuncio.getId()" method="post">
 															<p>Digite a palavra passe:</p>
 															<input class="form-controll llama-input" type="text" placeholder="Digite a palavra-passe" name="passw" required />
-															<div class="llamacheckbox-container">
-																<p><input class="llamacheckbox" type="radio" name="gig-sucesso" value="sim" required/> Sim :) </p>
-																<p><input class="llamacheckbox" type="radio" name="gig-sucesso" value="nao" required/> Não :( </p>
-															</div>
+															<br>
+															<p>Você encontrou parceiros para tocar?</p>
+																<input class="llamacheckbox" type="radio" name="gig-sucesso" value="sim" required/> Sim :)
+																<input class="llamacheckbox" type="radio" name="gig-sucesso" value="nao" required/> Não :( </p>
 														</form>
-														</div>
-													</div>
 												</div>
 												<div class="modal-footer">
 													<button type="submit" form="encerrar-anuncio" class="btn btn-sm btn-default">Finalizar Anúncio!</button> <button class="btn btn-sm btn-default" data-dismiss="modal">Fechar</button>
@@ -292,20 +288,25 @@
 
 		<!-- contador -->
 		<!-- ================ -->
-		@if(sucessos-1 > 1) {
+
 		<div class="default-bg space">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8 col-md-offset-2">
-
-							<h1 class="text-center">Mais de @{
-								sucessos - 1
-							} gigs feitos através do 2GIG!</h1>
+						@if(sucessos < 1) {
+							<h1 class="text-center">"<i>A vida sem música seria um erro</i>", disse o velho Nietzsche</h1>
+						}
+						@if(sucessos == 1) {
+						<h1 class="text-center">Nós ajudamos a formar @sucessos gig! - é pouco mas é verdadeiro!</h1>
+						}
+						@if(sucessos > 1) {
+							<h1 class="text-center">Nós ajudamos a formar @sucessos gigs!</h1>
+						}
 					</div>
 				</div>
 			</div>
 		</div>
-		}
+
 		<!-- contador end -->
 
 		<!-- footer start -->
